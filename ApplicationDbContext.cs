@@ -14,18 +14,18 @@ public class ApplicationDbContext : DbContext
             .HasOne(c => c.Creator)
             .WithMany(u => u.CreatedChats)
             .HasForeignKey(c => c.CreatorId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.Chat)
             .WithMany(c => c.Messages)
             .HasForeignKey(m => m.ChatId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.User)
             .WithMany()
             .HasForeignKey(m => m.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
