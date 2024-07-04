@@ -13,16 +13,19 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Chat>()
             .HasOne(c => c.Creator)
             .WithMany(u => u.CreatedChats)
-            .HasForeignKey(c => c.CreatorId);
+            .HasForeignKey(c => c.CreatorId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.Chat)
             .WithMany(c => c.Messages)
-            .HasForeignKey(m => m.ChatId);
+            .HasForeignKey(m => m.ChatId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.User)
             .WithMany()
-            .HasForeignKey(m => m.UserId);
+            .HasForeignKey(m => m.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

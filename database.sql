@@ -1,0 +1,24 @@
+﻿CREATE TABLE Users (
+    Id INT PRIMARY KEY,
+    Name NVARCHAR(MAX) NOT NULL
+);
+
+CREATE TABLE Chats (
+    Id INT PRIMARY KEY,
+    Name NVARCHAR(MAX) NOT NULL,
+    CreatorId INT NOT NULL,
+    CONSTRAINT FK_Chats_CreatorId FOREIGN KEY (CreatorId) REFERENCES Users(Id)
+);
+
+
+CREATE TABLE Messages (
+    Id INT PRIMARY KEY,
+    Content NVARCHAR(MAX) NOT NULL,
+    ChatId INT NOT NULL,
+    CONSTRAINT FK_Messages_ChatId FOREIGN KEY (ChatId) REFERENCES Chats(Id),
+    UserId INT NOT NULL,
+    CONSTRAINT FK_Messages_UserId FOREIGN KEY (UserId) REFERENCES Users(Id),
+    Timestamp DATETIME NOT NULL
+);
+
+GO
