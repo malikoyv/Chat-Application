@@ -1,6 +1,8 @@
-﻿public class UserConnection
+﻿public class Chat
 {
-    public string UserName { get; set; } = String.Empty;
-    public string Chatroom { get; set; } = String.Empty;
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int CreatorId { get; set; }
+    public User Creator { get; set; }
+    public List<Message> Messages { get; set; }
 }
-

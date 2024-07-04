@@ -1,21 +1,19 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace ChatApp.Hubs
+public class ChatHub : Hub
 {
-    public class Chathub : Hub
+    public async Task JoinChat(int chatId)
     {
-        public async Task JoinChat(UserConnection conn)
-        {
-            await Clients.All.
-                SendAsync("ReceiveMessage", "admin", $"{conn.UserName} has joined");
-        }
+        await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
+    }
 
-        public async Task JoinSpecificChatroom(UserConnection conn)
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, conn.Chatroom);
-            await Clients.Group(conn.Chatroom).SendAsync("ReceiveMessage", "admin", $"{conn.UserName} has joined {conn.Chatroom}");
-        }
+    public async Task LeaveChat(int chatId)
+    {
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId.ToString());
+    }
 
-
+    public async Task SendMessage(int chatId, int userId, string message)
+    {
+        await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", userId, message);
     }
 }
